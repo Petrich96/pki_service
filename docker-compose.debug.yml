@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+
+  pki-database:
+
+    networks:
+      - back_network
+      - front_network
