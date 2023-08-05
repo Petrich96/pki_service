@@ -36,12 +36,3 @@ clean:
 .PHONY: cleanAll
 cleanAll: clean
 			rm -rf datadb_dir ejbca_dir
-
-.PHONY: print
-cleanAll: print
-			docker compose \
-            			-f docker-compose.yml \
-            			-f docker-compose.debug.yml \
-            			down  \
-            			--remove-orphans \
-            			-v

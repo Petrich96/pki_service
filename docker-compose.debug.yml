@@ -4,6 +4,8 @@ services:
 
   pki-database:
 
+    ports:
+      - 3306:3306
     networks:
       - back_network
       - front_network
