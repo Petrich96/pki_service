@@ -20,7 +20,7 @@ services:
       - LOG_LEVEL_SERVER=INFO
       - TLS_SETUP_ENABLED="true"
     volumes:
-      - ./ejbca_dir:/mnt/persistent
+      - ./${EJBCA_DIR}:/mnt/persistent
 
   pki-database:
     image: mariadb:10.9
@@ -31,7 +31,7 @@ services:
       - MYSQL_USER=ejbca
       - MYSQL_PASSWORD=ejbca
     volumes:
-      - ./datadb_dir:/var/lib/mysql:rw
+      - ./${DATADB_DIR}:/var/lib/mysql:rw
     networks:
       - back_network
 

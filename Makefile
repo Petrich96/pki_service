@@ -1,12 +1,12 @@
-DATADB_DIR ?= datadb_dir
-EJBCA_DIR ?= ejbca_dir
 
+#Таким образом мы подключаем переменные
+include .env
 #Первая цель. Запускается по-умолчанию при вызове make без параметров.
 #Запускаем нашу PKI в релизном варианте.
 start: startRelease
 
 #Запуск контейнеров в режиме отладки
-startDebug: .env
+startDebug:
 			docker compose \
 			-f docker-compose.yml \
 			-f docker-compose.debug.yml \
@@ -14,7 +14,7 @@ startDebug: .env
 			-d --force-recreate
 
 #Запуск контейнеров в режиме релиз
-startRelease: .env
+startRelease:
 			docker compose \
 			-f docker-compose.yml \
 			up \
@@ -27,11 +27,6 @@ down:
 			-f docker-compose.debug.yml \
 			down  \
 			--remove-orphans
-
-
-#Создание файла с переменными по умолчанию
-.env:
-			cp .env.example .env
 
 
 #Остановка и очистка контейнеров
@@ -48,3 +43,4 @@ clean:
 .PHONY: cleanAll
 cleanAll: clean
 			rm -rf $(DATADB_DIR) $(EJBCA_DIR)
+
