@@ -6,7 +6,7 @@ EJBCA_DIR ?= ejbca_dir
 start: startRelease
 
 #Запуск контейнеров в режиме отладки
-startDebug:
+startDebug: .env
 			docker compose \
 			-f docker-compose.yml \
 			-f docker-compose.debug.yml \
@@ -14,7 +14,7 @@ startDebug:
 			-d --force-recreate
 
 #Запуск контейнеров в режиме релиз
-startRelease:
+startRelease: .env
 			docker compose \
 			-f docker-compose.yml \
 			up \
@@ -27,6 +27,12 @@ down:
 			-f docker-compose.debug.yml \
 			down  \
 			--remove-orphans
+
+
+#Создание файла с переменными по умолчанию
+.env:
+			cp .env.example .env
+
 
 #Остановка и очистка контейнеров
 .PHONY: clean
