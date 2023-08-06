@@ -1,21 +1,26 @@
-DOCKER_USERNAME ?= username
-APPLICATION_NAME ?= hello-world
+DATADB_DIR ?= datadb_dir
+EJBCA_DIR ?= ejbca_dir
 
+#Первая цель. Запускается по-умолчанию при вызове make без параметров.
+#Запускаем нашу PKI в релизном варианте.
+start: startRelease
+
+#Запуск контейнеров в режиме отладки
 startDebug:
 			docker compose \
 			-f docker-compose.yml \
 			-f docker-compose.debug.yml \
 			up \
-			-d --always-recreate-deps
+			-d --force-recreate
 
-
+#Запуск контейнеров в режиме релиз
 startRelease:
 			docker compose \
 			-f docker-compose.yml \
 			up \
-			-d --always-recreate-deps
+			-d --force-recreate
 
-
+#Остановка контейнеров
 down:
 			docker compose \
 			-f docker-compose.yml \
@@ -23,7 +28,7 @@ down:
 			down  \
 			--remove-orphans
 
-
+#Остановка и очистка контейнеров
 .PHONY: clean
 clean:
 			docker compose \
@@ -33,6 +38,7 @@ clean:
 			--remove-orphans \
 			-v
 
+#Остановка и очистка контейнеров, а так же удаление всех данных с диска
 .PHONY: cleanAll
 cleanAll: clean
-			rm -rf datadb_dir ejbca_dir
+			rm -rf $(DATADB_DIR) $(EJBCA_DIR)
